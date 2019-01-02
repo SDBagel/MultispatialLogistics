@@ -1,0 +1,63 @@
+﻿@model MultispatialLogistics.Models.Stargate
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Stargate</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ParentSystemId" class="control-label"></label>
+                <input asp-for="ParentSystemId" class="form-control" />
+                <span asp-validation-for="ParentSystemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StargateId" class="control-label"></label>
+                <input asp-for="StargateId" class="form-control" />
+                <span asp-validation-for="StargateId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DestinationSystemId" class="control-label"></label>
+                <input asp-for="DestinationSystemId" class="form-control" />
+                <span asp-validation-for="DestinationSystemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DestinationStargateId" class="control-label"></label>
+                <input asp-for="DestinationStargateId" class="form-control" />
+                <span asp-validation-for="DestinationStargateId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="XPos" class="control-label"></label>
+                <input asp-for="XPos" class="form-control" />
+                <span asp-validation-for="XPos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YPos" class="control-label"></label>
+                <input asp-for="YPos" class="form-control" />
+                <span asp-validation-for="YPos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ZPos" class="control-label"></label>
+                <input asp-for="ZPos" class="form-control" />
+                <span asp-validation-for="ZPos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
