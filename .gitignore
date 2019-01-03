@@ -3,7 +3,6 @@
 
 #EVE static data export & script generated files
 SDEScanner/sde-20180713-TRANQUILITY/
-SDEScanner/out.txt
 
 # User-specific files
 *.suo
