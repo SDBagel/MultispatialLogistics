@@ -10,26 +10,26 @@ namespace MultispatialLogistics.Controllers
 {
     public class HomeController : Controller
     {
+        private string token;
+        private string CharacterId;
+
         public IActionResult Index()
         {
+            token = Request.Cookies["accessToken"];
+            if (token == null)
+            {
+                Response.Redirect("../login");
+            }
+
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Login()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
+        public IActionResult Callback()
         {
             return View();
         }
