@@ -21,11 +21,14 @@ def generateStargateList():
 #terrible way to get it into the SQL Database but here it is
 def generateCSCode():
     data = open("out.txt", "r").read()
+    lines = open("out.txt", "r").read().split("\n")
+    cs = open("generatedCS.txt", "w")
     data = data.split("\n\n")
     for s in data:
         info = s.split("\n")
         ParentSystemId = (info[0])[0:8]
         StargateId = 0
+        DestinationSystemId = 0
         DestinationStargateId = 0
         XPos = 0
         YPos = 0
@@ -33,6 +36,10 @@ def generateCSCode():
         for i in range(int((len(info)-1)/6)):
             StargateId = (info[(i*6)+1])[0:8]
             DestinationStargateId = (info[(i*6)+2])[13:22]
+            for z in range(0, 20):
+                if (len(lines[lines.index(DestinationStargateId+":")-((z*6)+1)]) == 8):
+                    DestinationSystemId = lines[lines.index(DestinationStargateId+":")-((z*6)+1)]
+                    break
             XPos = (info[(i*6)+4])[2:]
             YPos = (info[(i*6)+5])[2:]
             ZPos = (info[(i*6)+6])[2:]
@@ -41,6 +48,7 @@ def generateCSCode():
             cs.write("{\n")
             cs.write("    ParentSystemId = "+str(ParentSystemId)+",\n")
             cs.write("    StargateId = "+str(StargateId)+",\n")
+            cs.write("    DestinationSystemId = "+str(DestinationSystemId)+",\n")
             cs.write("    DestinationStargateId = "+str(DestinationStargateId)+",\n")
             cs.write("    XPos = "+str(XPos[0:-2])+",\n")
             cs.write("    YPos = "+str(YPos[0:-2])+",\n")
