@@ -10,6 +10,7 @@ namespace MultispatialLogistics.Models
         public int Id { get; set; }
 
         public int ParentSystemId { get; set; }
+        public string ParentSystemName { get; set; }
         public int StargateId { get; set; }
         public int DestinationSystemId { get; set; }
         public int DestinationStargateId { get; set; }

@@ -30,6 +30,8 @@ namespace MultispatialLogistics.Migrations
 
                     b.Property<int>("ParentSystemId");
 
+                    b.Property<string>("ParentSystemName");
+
                     b.Property<int>("StargateId");
 
                     b.Property<long>("XPos");

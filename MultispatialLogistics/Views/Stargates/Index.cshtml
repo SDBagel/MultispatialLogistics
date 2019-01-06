@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.ParentSystemId)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ParentSystemName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.StargateId)
             </th>
             <th>
@@ -41,6 +44,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ParentSystemId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParentSystemName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StargateId)

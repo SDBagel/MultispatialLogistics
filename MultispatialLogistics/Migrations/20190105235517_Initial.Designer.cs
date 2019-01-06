@@ -9,7 +9,7 @@ using MultispatialLogistics.Models;
 namespace MultispatialLogistics.Migrations
 {
     [DbContext(typeof(MultispatialLogisticsContext))]
-    [Migration("20190102051023_Initial")]
+    [Migration("20190105235517_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,8 @@ namespace MultispatialLogistics.Migrations
                     b.Property<int>("DestinationSystemId");
 
                     b.Property<int>("ParentSystemId");
+
+                    b.Property<string>("ParentSystemName");
 
                     b.Property<int>("StargateId");
 

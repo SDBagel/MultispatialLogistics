@@ -156,15 +156,19 @@ namespace MultispatialLogistics.Controllers
             {
                 Response.Redirect("../login");
             }
-            
-            List<long> route = GetRoute(30004877, 30000160, "shortest");
-            string a = "";
-            foreach(long l in route)
+            else
             {
-                a += $"{GetTQResource($"/universe/systems/{l}/")["name"]}\n";
+                List<long> route = GetRoute(30004877, 30000160, "shortest");
+                string a = "";
+                foreach (long l in route)
+                {
+                    a += (from gate in _context.Stargate.ToList()
+                          where gate.ParentSystemId == l
+                          select gate).FirstOrDefault().ParentSystemName + " ";
+                }
+                ViewData["Route"] = a;
+                ViewData["Message"] = (GetRouteTime(route, 0, 5) / 60).ToString() + " - " + (GetRouteTime(route, 0, 15) / 60).ToString();
             }
-            ViewData["Route"] = a;
-            ViewData["Message"] = (GetRouteTime(route, 0, 5) / 60).ToString() + " - " + (GetRouteTime(route, 0, 15) / 60).ToString();
             return View();
         }
 

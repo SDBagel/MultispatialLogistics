@@ -14,6 +14,7 @@ namespace MultispatialLogistics.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ParentSystemId = table.Column<int>(nullable: false),
+                    ParentSystemName = table.Column<string>(nullable: true),
                     StargateId = table.Column<int>(nullable: false),
                     DestinationSystemId = table.Column<int>(nullable: false),
                     DestinationStargateId = table.Column<int>(nullable: false),

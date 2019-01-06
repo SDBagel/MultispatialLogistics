@@ -53,7 +53,7 @@ namespace MultispatialLogistics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ParentSystemId,StargateId,DestinationSystemId,DestinationStargateId,XPos,YPos,ZPos")] Stargate stargate)
+        public async Task<IActionResult> Create([Bind("Id,ParentSystemId,ParentSystemName,StargateId,DestinationSystemId,DestinationStargateId,XPos,YPos,ZPos")] Stargate stargate)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace MultispatialLogistics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ParentSystemId,StargateId,DestinationSystemId,DestinationStargateId,XPos,YPos,ZPos")] Stargate stargate)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ParentSystemId,ParentSystemName,StargateId,DestinationSystemId,DestinationStargateId,XPos,YPos,ZPos")] Stargate stargate)
         {
             if (id != stargate.Id)
             {
