@@ -89,7 +89,7 @@ namespace MultispatialLogistics.Controllers
 
             //TODO: get these from local SQL database from shipTypeID
             double maxWarpSpeed = 11.27;
-            double maxSubwarpSpeed = 307;
+            double maxSubwarpSpeed = 328;
             
             foreach (long systemID in systems)
             {
@@ -158,7 +158,23 @@ namespace MultispatialLogistics.Controllers
             }
             else
             {
-                List<long> route = GetRoute(30004877, 30000160, "shortest");
+                int origin = 0;
+                int destination = 0;
+                try
+                {
+                    origin = (from gate in _context.Stargate.ToList()
+                                  where gate.ParentSystemName == Request.Query["o"]
+                                  select gate).FirstOrDefault().ParentSystemId;
+                    destination = (from gate in _context.Stargate.ToList()
+                                       where gate.ParentSystemName == Request.Query["d"]
+                                       select gate).FirstOrDefault().ParentSystemId;
+                }
+                catch
+                {
+                    origin = 30000142;
+                    destination = 30004504;
+                }
+                List<long> route = GetRoute(origin, destination, "shortest");
                 string a = "";
                 foreach (long l in route)
                 {

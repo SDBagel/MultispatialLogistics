@@ -26,9 +26,13 @@
     margin-left: 7vw;
 }
 
-img {
+#loginButton {
     margin: auto;
-    width: 15%;
+    width: 20%;
+}
+
+.contentBlock {
+    margin: 5vh 15em;
 }
 
 footer p {
