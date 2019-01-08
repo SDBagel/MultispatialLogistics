@@ -174,7 +174,7 @@ namespace MultispatialLogistics.Controllers
                     origin = 30000142;
                     destination = 30004504;
                 }
-                List<long> route = GetRoute(origin, destination, "shortest");
+                List<long> route = GetRoute(origin, destination, "secure");
                 string a = "";
                 foreach (long l in route)
                 {

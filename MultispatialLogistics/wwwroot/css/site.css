@@ -26,7 +26,8 @@
     margin-left: 7vw;
 }
 
-#loginButton {
+#loginBlock {
+    display: block;
     margin: auto;
     width: 20%;
 }

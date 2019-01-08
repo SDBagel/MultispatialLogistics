@@ -2,13 +2,5 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div id="titleBlock">
-    <img src="~/images/sdp-ico.png" />
-    <h1>Multispatial Logistics</h1>
-    <h2>Services to you, when you need them</h2>
-</div>
-<hr />
-<div class="contentBlock">
-    @ViewData["Route"]
-    @ViewData["Message"]
-</div>
+@ViewData["Route"]
+@ViewData["Message"]
