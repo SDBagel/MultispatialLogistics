@@ -25,7 +25,7 @@ namespace MultispatialLogistics.Controllers
         {
             string url = @"https://login.eveonline.com/oauth/token";
 
-            //POST to CCP for token and return token from the acquired json file
+            //POST to CCP for token and return string token from the acquired json file
             using (WebClient client = new WebClient())
             {
                 client.Headers[HttpRequestHeader.Authorization] = "Basic ODIwZGMyNzQ3ZjQyNDgyZjgzZjJhNmU5MGFiNWE4ZTI6b0tUbmZZcDZBMzF5Ym9ka1lBQzluYnJ2cnNubEw1cXFRMmVMVHlWcw==";
@@ -83,7 +83,7 @@ namespace MultispatialLogistics.Controllers
             }
         }
 
-        private double GetRouteTime(List<long> systems, int shipTypeID, int perSystemOffset)
+        private double GetRouteTime(List<long> systems, string shipName, int perSystemOffset)
         {
             double totalTime = 0;
 
@@ -136,6 +136,12 @@ namespace MultispatialLogistics.Controllers
                     //add 20 seconds to account for system change times
                     totalTime += 20;
                     //TODO: add ship align times 
+
+                    /* from db get ship using shipName
+                     * (ln(2) * ship.Inertia +- player inertia modifiers * ship.Mass +- fit modifiers) / 500,000
+                     * Example values: 2.1688 & 1075000 (1.075 tonnes) for slasher
+                    */
+
                     //add buffer for not perfect to-warp transition times
                     totalTime += perSystemOffset;
                 }
@@ -158,32 +164,43 @@ namespace MultispatialLogistics.Controllers
             }
             else
             {
-                int origin = 0;
-                int destination = 0;
+                //Try to extract route info from url
                 try
                 {
-                    origin = (from gate in _context.Stargate.ToList()
+                    //Converts o (origin) and d (destination) flags into usable IDs from URL
+                    int origin = (from gate in _context.Stargate.ToList()
                                   where gate.ParentSystemName == Request.Query["o"]
                                   select gate).FirstOrDefault().ParentSystemId;
-                    destination = (from gate in _context.Stargate.ToList()
+                    int destination = (from gate in _context.Stargate.ToList()
                                        where gate.ParentSystemName == Request.Query["d"]
                                        select gate).FirstOrDefault().ParentSystemId;
+                    string ship = Request.Query["s"];
+
+                    if (ship == null)
+                        throw new ArgumentException();
+
+                    //Gets route and outputs to view
+                    //TODO: scoop this into a method that generates partial view that looks nice
+                    List<long> route = GetRoute(origin, destination, "secure");
+                    string a = "";
+                    foreach (long l in route)
+                    {
+                        a += (from gate in _context.Stargate.ToList()
+                              where gate.ParentSystemId == l
+                              select gate).FirstOrDefault().ParentSystemName + " ";
+                    }
+                    ViewData["Route"] = a;
+                    //Display estimated range of values for route time
+                    ViewData["Message"] = Math.Round((GetRouteTime(route, ship, 5) / 60), 2).ToString() + 
+                                  " - " + Math.Round((GetRouteTime(route, ship, 10) / 60), 2).ToString();
                 }
                 catch
                 {
-                    origin = 30000142;
-                    destination = 30004504;
+                    if (Request.Query.Count != 0)
+                        ViewData["Message"] = "Invalid route URL: usage - \"?o=Jita&d=Perimeter&s=Velator\" " +
+                                              "Check system and ship names are valid, and all entries are satisfied.";
                 }
-                List<long> route = GetRoute(origin, destination, "secure");
-                string a = "";
-                foreach (long l in route)
-                {
-                    a += (from gate in _context.Stargate.ToList()
-                          where gate.ParentSystemId == l
-                          select gate).FirstOrDefault().ParentSystemName + " ";
-                }
-                ViewData["Route"] = a;
-                ViewData["Message"] = (GetRouteTime(route, 0, 5) / 60).ToString() + " - " + (GetRouteTime(route, 0, 15) / 60).ToString();
+                
             }
             return View();
         }
