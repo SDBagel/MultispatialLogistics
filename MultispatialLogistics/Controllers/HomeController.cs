@@ -154,6 +154,7 @@ namespace MultispatialLogistics.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             //If there is no token from Callback(), redirect to login
@@ -202,6 +203,39 @@ namespace MultispatialLogistics.Controllers
                 }
                 
             }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(string origin, string destination)
+        {
+            try
+            {
+                int o = (from gate in _context.Stargate.ToList()
+                         where gate.ParentSystemName == origin
+                         select gate).FirstOrDefault().ParentSystemId;
+                int d = (from gate in _context.Stargate.ToList()
+                         where gate.ParentSystemName == destination
+                         select gate).FirstOrDefault().ParentSystemId;
+                string ship = "";
+
+                //Gets route and outputs to view
+                //TODO: scoop this into a method that generates partial view that looks nice
+                List<long> route = GetRoute(o, d, "secure");
+                string a = "";
+                foreach (long l in route)
+                {
+                    a += (from gate in _context.Stargate.ToList()
+                          where gate.ParentSystemId == l
+                          select gate).FirstOrDefault().ParentSystemName + " ";
+                }
+                ViewData["Route"] = a;
+                //Display estimated range of values for route time
+                ViewData["Message"] = Math.Round((GetRouteTime(route, ship, 5) / 60), 2).ToString() +
+                              " - " + Math.Round((GetRouteTime(route, ship, 10) / 60), 2).ToString();
+            }
+            catch
+            { }
             return View();
         }
 
