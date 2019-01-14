@@ -33,7 +33,7 @@ namespace MultispatialLogistics.Controllers
                 client.Headers[HttpRequestHeader.Host] = "login.eveonline.com";
                 client.Headers["grant_type"] = "authorization_code";
 
-                string data = string.Format(@"grant_type=authorization_code&code={0}&redirect_uri=http://localhost:49279/", code);
+                string data = string.Format(@"grant_type=authorization_code&code={0}&redirect_uri=http://localhost:44349/", code);
                 return JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(client.UploadString(url, data))["access_token"];
             }
         }

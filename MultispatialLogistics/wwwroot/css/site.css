@@ -6,7 +6,7 @@
 #titleBlock {
     margin: auto;
     margin-bottom: 4vh;
-    width: 32%;
+    width: 34%;
 }
 
 #titleBlock img {
@@ -22,14 +22,19 @@
 
 #titleBlock h2 {
     font-size: 1.4em;
-    margin-top: 0;
+    margin-top: -1vw;
     margin-left: 7vw;
 }
 
 #loginBlock {
     display: block;
+    font-size: 1.12vw;
     margin: auto;
-    width: 20%;
+    width: 22%;
+}
+
+#loginBlock img {
+    width: 100%;
 }
 
 .contentBlock {
