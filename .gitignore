@@ -3,6 +3,7 @@
 
 #EVE static data export & script generated files
 SDEScanner/sde/
+SDEScanner/Legacy/sde
 
 # User-specific files
 *.suo

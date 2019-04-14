@@ -1,8 +1,9 @@
 import glob
 import os
+import json
 
 #writes list of stargates and info organized by parent system ID
-#generateCSCode() depends on this functions output organization
+#generateJson() depends on this functions output organization
 def generateStargateList():
     #grab all files that contain stargate data
     files = glob.glob("sde\\fsd\\universe\\eve\\*\\*\\*\\solarsystem.staticdata")
@@ -22,22 +23,32 @@ def generateStargateList():
             if(not("typeID" in l)):
                 out.write(l.strip() + "\n")
 
-#terrible way to get it into the SQL Database but here it is
-def generateCSCode():
+# define a Stargate class that can be serialized
+class Stargate():
+    def __init__(self, PSystemId, PSystemName, StargateId, DSystemId, DStargateId, XPos, YPos, ZPos):
+        self.ParentSystemId = PSystemId
+        self.ParentSystemName = PSystemName
+        self.StargateId = StargateId
+        self.DestinationSystemId = DSystemId
+        self.DestinationStargateId = DStargateId
+        self.XPos = XPos
+        self.YPos = YPos
+        self.ZPos = ZPos
+
+#generates JSON file through the power of j a n k
+def generateJson():
     data = open("out.txt", "r").read()
     lines = open("out.txt", "r").read().split("\n")
-    cs = open("generatedCS.txt", "w")
+
     data = data.split("\n\n")
+    data.pop()
+
+    gates = []
     for s in data:
         info = s.split("\n")
         ParentSystemId = (info[1])[0:8]
         ParentSystemName = info[0]
-        StargateId = 0
-        DestinationSystemId = 0
-        DestinationStargateId = 0
-        XPos = 0
-        YPos = 0
-        ZPos = 0
+
         for i in range(int((len(info)-1)/6)):
             StargateId = (info[(i*6)+2])[0:8]
             DestinationStargateId = (info[(i*6)+3])[13:22]
@@ -51,18 +62,11 @@ def generateCSCode():
             XPos = (info[(i*6)+5])[2:]
             YPos = (info[(i*6)+6])[2:]
             ZPos = (info[(i*6)+7])[2:]
-            cs = open("generatedCS.txt", "a")
-            cs.write("new Stargate\n")
-            cs.write("{\n")
-            cs.write("    ParentSystemId = "+str(ParentSystemId)+",\n")
-            cs.write("    ParentSystemName = \""+str(ParentSystemName)+"\",\n")
-            cs.write("    StargateId = "+str(StargateId)+",\n")
-            cs.write("    DestinationSystemId = "+str(DestinationSystemId)+",\n")
-            cs.write("    DestinationStargateId = "+str(DestinationStargateId)+",\n")
-            cs.write("    XPos = "+str(XPos[0:-2])+",\n")
-            cs.write("    YPos = "+str(YPos[0:-2])+",\n")
-            cs.write("    ZPos = "+str(ZPos[0:-2])+"\n")
-            cs.write("},\n")
+
+            gates.append(Stargate(ParentSystemId, ParentSystemName, StargateId, DestinationSystemId, DestinationStargateId, XPos, YPos, ZPos).__dict__)
+
+    generated = open("generated.json", "w")
+    json.dump(gates, generated)
 
 generateStargateList()
-generateCSCode()
+generateJson()
