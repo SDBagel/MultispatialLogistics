@@ -14,8 +14,7 @@ def generateStargateList():
         #split data before and after systemID to get value
         sysID = data.split('solarSystemID:')[1].split('solarSystemNameID:')[0].strip()
         #split data before and after stargate info to get values, then split by line
-        data = data.split('stargates:')[1].split('sunTypeID:')[0]
-        data = data.split("\n")
+        data = data.split('stargates:')[1].split('sunTypeID:')[0].split("\n")
         out.write((os.path.abspath(os.path.join(file, os.pardir))+"\n").split("\\")[-1])
         out.write(sysID)
         #write stripped lines to output
@@ -37,11 +36,9 @@ class Stargate():
 
 #generates JSON file through the power of j a n k
 def generateJson():
-    data = open("out.txt", "r").read()
-    lines = open("out.txt", "r").read().split("\n")
-
-    data = data.split("\n\n")
+    data = open("out.txt", "r").read().split("\n\n")
     data.pop()
+    lines = open("out.txt", "r").read().split("\n")
 
     gates = []
     for s in data:
@@ -59,9 +56,9 @@ def generateJson():
                 if (len(lines[gatePos-((z*6)+1)]) == 8):
                     DestinationSystemId = lines[gatePos-((z*6)+1)]
                     break
-            XPos = (info[(i*6)+5])[2:]
-            YPos = (info[(i*6)+6])[2:]
-            ZPos = (info[(i*6)+7])[2:]
+            XPos = (info[(i*6)+5])[2:-2]
+            YPos = (info[(i*6)+6])[2:-2]
+            ZPos = (info[(i*6)+7])[2:-2]
 
             gates.append(Stargate(ParentSystemId, ParentSystemName, StargateId, DestinationSystemId, DestinationStargateId, XPos, YPos, ZPos).__dict__)
 
