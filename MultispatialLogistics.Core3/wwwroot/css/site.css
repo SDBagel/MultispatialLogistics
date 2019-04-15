@@ -101,7 +101,7 @@ footer {
 
 @media screen and (max-width: 600px) {
     .content {
-        width: 300px;
+        width: 360px;
     }
     .right {
         height: auto;
