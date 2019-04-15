@@ -1,37 +1,27 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
+﻿a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
 }
 
-.page-center {
-    margin-top: 10vh;
-    height: 70vh;
+.content {
+    width: 1000px;
+    margin: auto;
 }
 
-.fpg-left {
+.page-center {
+    margin-top: 10vh;
+    height: 550px;
+}
+
+.left {
     display: block;
     float: left;
     width: 50%;
-    height: 100%;
+    margin-bottom: 100px;
 }
 
-.feature {
-    margin-top: 14%;
-    width: 90%;
-}
-
-.feature img {
-    width: 80px;
-    float: left;
-    margin: 20px;
-    margin-top: 0;
-}
-
-.fpg-right {
+.right {
     border-left: 5px solid #77c2ff;
     border-bottom: 5px solid #77a6ff;
     border-bottom-left-radius: 25px;
@@ -39,95 +29,96 @@ a.navbar-brand {
     float: right;
     width: 50%;
     height: 100%;
-
-    padding-top: 8%;
+    padding-top: 10%;
 }
 
-.fpg-login {
+.feature {
+    margin-top: 14%;
+    width: 90%;
+}
+
+.feature div {
+    margin-left: 105px;
+}
+
+.feature img {
+    width: 80px;
+    float: left;
+    margin: 10px;
+    margin-top: 0;
+}
+
+.login {
     display: block;
-    width: 70%;
+    width: 350px;
     margin: auto;
-    margin-top: 25%;
+    margin-top: 15vh;
     padding: 10px;
     border-top: 5px solid #77a6ff;
     border-right: 5px solid #77c2ff;
     border-top-right-radius: 20px;
 }
 
-#login-image {
+.login img {
     display: block;
     width: 80%;
     margin: auto;
-    margin-top: 10px;
 }
 
-@media screen and (max-width: 980px) {
+footer {
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 0;
+}
+
+@media screen and (max-width: 1000px) {
+    .content {
+        width: 600px;
+    }
     .page-center {
         margin-top: 5vh;
     }
-    .fpg-right {
-        float: none;
+    .right {
         width: 100%;
         height: 30%;
         padding: 0;
     }
-    .fpg-login {
-        margin-top: 5%;
-        width: 55%;
-    }
-    .fpg-left {
-        float: none;
+    .left {
         width: 100%;
+        padding: 0 5%;
+    }
+    .login {
+        width: 300px;
+        margin-top: 5%;
     }
     .feature {
         margin-top: 10%;
     }
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
+@media screen and (max-width: 600px) {
+    .content {
+        width: 300px;
+    }
+    .right {
+        height: auto;
+        padding-bottom: 5%;
+    }
+    .right h2 {
+        font-size: 26px;
+    }
+    .login {
+        border: none;
+    }
+    .feature div {
+        margin-left: 70px;
+    }
+    .feature img {
+        width: 60px;
+        margin: 5px;
+        margin-top: 0;
+    }
 }
